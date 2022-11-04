@@ -14,7 +14,7 @@ public class ClosestPair {
             bufferedReader = new BufferedReader(fileReader);
             numberOfRecords = Integer.parseInt(bufferedReader.readLine().trim());
             if (numberOfRecords == 0)
-                throw new IllegalArgumentException("File is empty");
+                throw new IllegalArgumentException("Input file is empty");
             if (numberOfRecords == 1)
                 throw new IllegalArgumentException("Number of coordinates should be " + "at least two to find distance");
         }
