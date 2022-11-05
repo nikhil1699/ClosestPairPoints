@@ -22,7 +22,7 @@ public class ClosestPair {
             closestPairs.minimumDistanceBetweenPoints(points,numberOfPoints);
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Input Error.");
         }
     }
 
