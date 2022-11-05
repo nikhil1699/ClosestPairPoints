@@ -1,25 +1,42 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
 
 public class ClosestPair {
-    public static void main(String[] args) throws FileNotFoundException {
-        final String inputFileName = "program2trivialdata.txt";
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
-        int numberOfRecords = 0;
+    public static void main(String[] args) {
+        final String inputFileName = "src/program2trivialdata.txt";
+        FileReader fileReader;
+        BufferedReader bufferedReader;
+        int numberOfPoints;
         try {
             fileReader = new FileReader(inputFileName);
             bufferedReader = new BufferedReader(fileReader);
-            numberOfRecords = Integer.parseInt(bufferedReader.readLine().trim());
-            if (numberOfRecords == 0)
+            numberOfPoints = Integer.parseInt(bufferedReader.readLine().trim());
+            if (numberOfPoints == 0)
                 throw new IllegalArgumentException("Input file is empty");
-            if (numberOfRecords == 1)
-                throw new IllegalArgumentException("Number of coordinates should be " + "at least two to find distance");
+            if (numberOfPoints == 1)
+                throw new IllegalArgumentException("Incorrect input format");
+            Point[] points = getInputFromFile(bufferedReader,numberOfPoints);
+            Algorithm closestPairs = new Algorithm();
+            closestPairs.minimumDistanceBetweenPoints(points,numberOfPoints);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+
+    private static Point[] getInputFromFile(BufferedReader bufferedReader, int numberOfPoints) throws IOException {
+        Point[] points = new Point[numberOfPoints];
+        for (int i = 0; i < numberOfPoints; i++) {
+            String[] lines = bufferedReader.readLine().trim().split("\\s+");
+            double xCord = Double.parseDouble(lines[0]);
+            double yCord = Double.parseDouble(lines[1]);
+            Point dummy = new Point(xCord,yCord);
+            points[i] = dummy;
+        }
+        return points;
     }
 }
