@@ -20,8 +20,8 @@ public class ClosestPairAlgorithm {
         XComparator comparatorFxn = new XComparator();
         YComparator comparatorFyn = new YComparator();
 
-        Arrays.sort(pointsSortedByX,comparatorFxn);
-
+        Arrays.sort(pointsSortedByX,comparatorFxn); // Array sorted by X Coordinates
+        // Creating an array sorted by Y coordinates
         Point[] pointsSortedByY = new Point[numberOfPoints];
         System.arraycopy(pointsSortedByX, 0, pointsSortedByY, 0, numberOfPoints);
         Arrays.sort(pointsSortedByY, comparatorFyn);
@@ -49,16 +49,17 @@ public class ClosestPairAlgorithm {
         Point[] rightSetOfX = new Point[numberOfPoints - mid];
         Point[] rightSetOfY = new Point[numberOfPoints - mid];
         Point[] pointsInDeltaRange = new Point[numberOfPoints];
-
+        // Creating partitions
         partitionOfX(pointsSortedByX, leftSetOfX, rightSetOfX);
         partitionOfY(pointsSortedByY, leftSetOfY, rightSetOfY, middleElement);
 
-        double distLeft = divideAndConquerHelper(leftSetOfX, leftSetOfY, low, midIndex-1);
-        double distRight = divideAndConquerHelper(rightSetOfX, rightSetOfY, midIndex, high);
+        double distLeft = divideAndConquerHelper(leftSetOfX, leftSetOfY, low, midIndex-1); // Gets the min-distance in left set
+        double distRight = divideAndConquerHelper(rightSetOfX, rightSetOfY, midIndex, high); // Gets min-distance in right set
 
         double delta = min(distRight,distLeft);
 
         int numPointsInDeltaRange = 0;
+        // Calculating points in the delta range
         for (int i = 0; i < numberOfPoints; i++) {
             if (pointsSortedByY[i].getxCoordinate() - middleElement.getxCoordinate() < delta){
                 pointsInDeltaRange[numPointsInDeltaRange] = pointsSortedByY[i];
