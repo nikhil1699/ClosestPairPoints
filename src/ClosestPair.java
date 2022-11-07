@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Class to accept a file of Points and calculate the closest pair of points.
@@ -36,7 +37,7 @@ public class ClosestPair {
             closestPairs.minimumDistanceBetweenPoints(points,numberOfPoints);
         }
         catch (IOException e) {
-            System.err.println("Input Error.");
+            System.err.println("Input Error. " + e.getMessage());
         }
     }
 
@@ -47,13 +48,38 @@ public class ClosestPair {
      */
     private static Point[] getInputFromFile(BufferedReader bufferedReader, int numberOfPoints) throws IOException {
         Point[] points = new Point[numberOfPoints];
+        String line;
         for (int i = 0; i < numberOfPoints; i++) {
-            String[] lines = bufferedReader.readLine().trim().split("\\s+");
-            double xCord = Double.parseDouble(lines[0]);
-            double yCord = Double.parseDouble(lines[1]);
-            Point dummy = new Point(xCord,yCord);
-            points[i] = dummy;
+            line = getNextStringIfValid(bufferedReader);
+            if(!Objects.equals(line, "")) {
+                String[] lines = line.trim().split("\\s+");
+                double xCoord = Double.parseDouble(lines[0]);
+                double yCoord = Double.parseDouble(lines[1]);
+                Point point = new Point(xCoord, yCoord);
+                points[i] = point;
+            } else {
+                throw new IOException("Entries don't match number of points.");
+            }
+        }
+
+        String extraLine = getNextStringIfValid(bufferedReader);
+        if(!Objects.equals(extraLine, "")){
+            throw new IOException("Entries don't match number of points.");
         }
         return points;
+    }
+
+    /**
+     * Check if next line has a pair of points.
+     * pre: Buffered reader is allocated.
+     * post: Returns string containing a pair of points if exists.
+     */
+    private static String getNextStringIfValid(BufferedReader bufferedReader) throws IOException {
+        String line;
+        if((line = bufferedReader.readLine())!= null && !Objects.equals(line, "")) {
+            return line;
+        } else {
+            return "";
+        }
     }
 }
