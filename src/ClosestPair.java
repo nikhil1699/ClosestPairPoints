@@ -3,9 +3,21 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Class to accept a file of Points and calculate the closest pair of points.
+ * @author Nikhil Chauhan, Esha Gavali
+ */
 public class ClosestPair {
+
+    /**
+     * Main Method: Reads input file for the closest pair of points calculation.
+     * pre: Requires file with number of points, and points written.
+     * post: The closest pair of points and their distance will be outputted to console.
+     */
     public static void main(String[] args) {
-        final String inputFileName = "src/program2trivialdata.txt";
+
+        //TODO: remember to remove 'src' before submitting
+        final String inputFileName = "src/program2data.txt";
         FileReader fileReader;
         BufferedReader bufferedReader;
         int numberOfPoints;
@@ -18,7 +30,9 @@ public class ClosestPair {
             if (numberOfPoints == 1)
                 throw new IllegalArgumentException("Incorrect input format");
             Point[] points = getInputFromFile(bufferedReader,numberOfPoints);
-            Algorithm closestPairs = new Algorithm();
+
+            ClosestPairAlgorithm closestPairs = new ClosestPairAlgorithm();
+            //calculate closest pair minimum distance and output intermediate steps.
             closestPairs.minimumDistanceBetweenPoints(points,numberOfPoints);
         }
         catch (IOException e) {
@@ -26,8 +40,11 @@ public class ClosestPair {
         }
     }
 
-
-
+    /**
+     * Reads point coordinates from the file.
+     * pre: Correctly formatted file.
+     * post: Returns an array of Points.
+     */
     private static Point[] getInputFromFile(BufferedReader bufferedReader, int numberOfPoints) throws IOException {
         Point[] points = new Point[numberOfPoints];
         for (int i = 0; i < numberOfPoints; i++) {
